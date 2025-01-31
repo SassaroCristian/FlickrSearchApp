@@ -9,7 +9,6 @@
                    x:Name="SearchBar"
                    SearchCommand="{Binding SearchCommand}"
                    Text="{Binding SearchQuery, Mode=TwoWay}"/>
-
         <!-- Activity indicator to show loading state -->
         <ActivityIndicator IsRunning="{Binding IsLoading}"
                            IsVisible="{Binding IsLoading}"/>
@@ -20,10 +19,14 @@
                         RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Image Source="{Binding ImageUrl}"
-                               WidthRequest="150"
-                               HeightRequest="150"
-                               Aspect="AspectFill"/>
+                        <Grid>
+        <Image Source="{Binding UrlSmall}"
+               Aspect="AspectFill"/>
+        <Label Text="{Binding Title}"  
+               BackgroundColor="#80000000"
+               TextColor="White"
+               VerticalOptions="End"/>
+    </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
