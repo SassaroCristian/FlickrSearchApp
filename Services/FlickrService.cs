@@ -6,32 +6,29 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using FlickrSearchApp.Models;
 
+
 namespace FlickrSearchApp.Services
 {
 	public class FlickrService
 	{
 		private readonly HttpClient _httpClient;
 		private readonly string _apiKey;
+        private readonly SettingsService _settingsService;
 
-		// API base url for flickr
-		private const string ApiUrl = "https://api.flickr.com/services/rest/";
+        // API base url for flickr
+        private const string ApiUrl = "https://api.flickr.com/services/rest/";
 
-		public FlickrService()
+		public FlickrService(SettingsService settingsService) 
 		{
 			_httpClient = new HttpClient();
+            _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
+            // Get API key from Preference
+            _apiKey = settingsService.GetApiKey();
 
-			// Load the Api key from appsettings.json
-			var configuration = new ConfigurationBuilder()
-				.SetBasePath(Directory.GetCurrentDirectory())
-				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-				.Build();
+        }
 
-			// read the Api key from the config file
-			_apiKey = configuration["FlickrApiKey"];
-		}
-
-		// Method to search for photos based on a query and page number
-		public async Task<FlickrResponse> SearchPhotosAsync(string query, int page = 1)
+        // Method to search for photos based on a query and page number
+        public async Task<FlickrResponse> SearchPhotosAsync(string query, int page = 1)
 		{
 			if (string.IsNullOrEmpty(_apiKey))
 			{
