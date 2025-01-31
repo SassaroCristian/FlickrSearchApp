@@ -35,8 +35,13 @@ namespace FlickrSearchApp.Services
                 throw new InvalidOperationException("API key is not set.");
             }
 
-			// Construct the Api request url
-			var url = $"{ApiUrl}?method=flickr.photos.search&api_key={_apiKey}&text={query}&page={page}&format=json&nojsoncallback=1";
+            // Construct the Api request url
+            var url = $"{ApiUrl}?method=flickr.photos.search" +
+          $"&api_key={_apiKey}" +
+          $"&text={Uri.EscapeDataString(query)}" +
+          $"&page={page}" +
+          "&extras=url_s,url_l" + 
+          "&format=json&nojsoncallback=1";
 
             // Send the request and get the response as a string
             var response = await _httpClient.GetStringAsync(url);
