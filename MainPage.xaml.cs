@@ -5,12 +5,13 @@ using Microsoft.Maui.Controls;
 
 public partial class MainPage : ContentPage
 {
-	public MainPage()
-	{
-		InitializeComponent();
-        var flickrService = DependencyService.Get<FlickrService>();
-        var viewModel = new MainViewModel(flickrService); 
-        this.BindingContext = viewModel;
+    private readonly FlickrService _flickrService;
+
+    // Use constructor injection for FlickrService
+    public MainPage(MainViewModel viewModel)
+    {
+        InitializeComponent();
+        BindingContext = viewModel;
     }
 }
 
