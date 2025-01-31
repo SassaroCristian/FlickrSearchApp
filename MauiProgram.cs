@@ -1,28 +1,32 @@
 ﻿using Microsoft.Extensions.Logging;
 using FlickrSearchApp.Models;
 using FlickrSearchApp.Services;
-namespace FlickrSearchApp;
 
-public static class MauiProgram
+namespace FlickrSearchApp
 {
-	public static MauiApp CreateMauiApp()
+
+	public static class MauiProgram
 	{
-		var builder = MauiApp.CreateBuilder();
-		builder
-			.UseMauiApp<App>()
-			.ConfigureFonts(fonts =>
-			{
-				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-			});
+		public static MauiApp CreateMauiApp()
+		{
+			var builder = MauiApp.CreateBuilder();
+			builder
+				.UseMauiApp<App>()
+				.ConfigureFonts(fonts =>
+				{
+					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+					fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+				});
 			builder.Services.AddSingleton<SettingsService>();
 			builder.Services.AddSingleton<FlickrService>();
 			builder.Services.AddSingleton<MainViewModel>();
+            builder.Services.AddSingleton<MainPage>();
 
 #if DEBUG
-        builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
-		return builder.Build();
+			return builder.Build();
+		}
 	}
 }
