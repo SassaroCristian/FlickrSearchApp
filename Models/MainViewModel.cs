@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using FlickrSearchApp.Models;
 using FlickrSearchApp.Services;
 using Microsoft.Maui.Controls;
+using System.Windows.Input;
 
 namespace FlickrSearchApp.Models
 {
@@ -15,9 +16,9 @@ namespace FlickrSearchApp.Models
 		private string _searchQuery;
 		private bool _isLoading;
 
-        public MainViewModel()
+        public MainViewModel(FlickrService flickrService)
         {
-            _flickrService = new FlickrService();
+            _flickrService = flickrService;
             Photos = new ObservableCollection<Photo>();
             SearchCommand = new Command(async () => await ExecuteSearchCommand()); // SearchCommand initialization
         }
@@ -65,12 +66,16 @@ namespace FlickrSearchApp.Models
 
             Photos.Clear();
 
-            // Add the new search results to the collection
-            foreach (var photo in result.Photos.PhotoList)
+            var result = await _flickrService.SearchPhotosAsync(SearchQuery);
+            
+            if (result != null && result.Photos?.PhotoList != null)
             {
-                Photos.Add(photo);
+                // Add the new search results to the collection
+                foreach (var photo in result.Photos.PhotoList)
+                {
+                    Photos.Add(photo);
+                }
             }
-
             IsLoading = false;
         }
         
