@@ -1,9 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using FlickrSearchApp.Models;
 using FlickrSearchApp.Services;
-using Microsoft.Maui.Controls;
 using System.Windows.Input;
 
 namespace FlickrSearchApp.Models
