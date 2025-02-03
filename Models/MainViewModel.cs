@@ -15,12 +15,14 @@ namespace FlickrSearchApp.Models
 
 		private string _searchQuery;
 		private bool _isLoading;
+        private int _currentPage = 1;
 
         public MainViewModel(FlickrService flickrService)
         {
             _flickrService = flickrService;
             Photos = new ObservableCollection<Photo>();
             SearchCommand = new Command(async () => await ExecuteSearchCommand()); // SearchCommand initialization
+            LoadMoreCommand = new Command(async () => await ExecuteLoadMoreCommand());
         }
 		public string SearchQuery
 		{
@@ -57,6 +59,7 @@ namespace FlickrSearchApp.Models
         }
 
         public ICommand SearchCommand { get; }
+        public ICommand LoadMoreCommand { get; }
 
         private async Task ExecuteSearchCommand()
         {
@@ -64,21 +67,44 @@ namespace FlickrSearchApp.Models
 
             IsLoading = true;
 
-            Photos.Clear();
+            _currentPage = 1;
+            Photos.Clear(); // Clear previous photos
 
             var result = await _flickrService.SearchPhotosAsync(SearchQuery);
-            
-            if (result != null && result.Photos?.PhotoList != null)
+
+            if (result != null && result.Photos?.PhotoList != null && result.Photos.PhotoList.Count > 0)
             {
-                // Add the new search results to the collection
+                // Add the 5 photos to the collection
                 foreach (var photo in result.Photos.PhotoList)
                 {
                     Photos.Add(photo);
                 }
             }
+
             IsLoading = false;
         }
-        
+
+        private async Task ExecuteLoadMoreCommand()
+        {
+            if (IsLoading) return; // Avoid multiple simultaneous loads
+
+            IsLoading = true;
+            _currentPage++;
+
+            var result = await _flickrService.SearchPhotosAsync(SearchQuery, _currentPage);
+
+            if (result != null && result.Photos?.PhotoList != null && result.Photos.PhotoList.Count > 0)
+            {
+                // Add the next set of photos to the collection
+                foreach (var photo in result.Photos.PhotoList)
+                {
+                    Photos.Add(photo);
+                }
+            }
+
+            IsLoading = false;
+        }
+
         // Event to notify the UI when a property changes
         public event PropertyChangedEventHandler PropertyChanged;
 
