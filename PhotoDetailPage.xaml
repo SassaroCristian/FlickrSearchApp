@@ -1,15 +1,15 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
-
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FlickrSearchApp.Views.PhotoDetailPage">
+             x:Class="FlickrSearchApp.Views.PhotoDetailPage"
+             Title="Photo Details">
     <Grid Padding="10">
         <!-- Immagine a schermo intero -->
         <Image x:Name="PhotoImage"
                Aspect="AspectFit"
                HorizontalOptions="Center"
-               VerticalOptions="Center"/>
+               VerticalOptions="Center"
+               Source="{Binding PhotoUrl}"/>
         
         <!-- Box con informazioni -->
         <StackLayout BackgroundColor="Black"
@@ -19,10 +19,12 @@
             <Label x:Name="PhotoTitle"
                    TextColor="White"
                    FontSize="18"
-                   FontAttributes="Bold"/>
+                   FontAttributes="Bold"
+                   Text="{Binding Title}"/>
             <Label x:Name="PhotoAuthor"
                    TextColor="White"
-                   FontSize="14"/>
+                   FontSize="14"
+                   Text="{Binding Author}"/>
         </StackLayout>
     </Grid>
 </ContentPage>
