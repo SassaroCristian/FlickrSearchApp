@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FlickrSearchApp.Views.PhotoDetailPage">
+    <Grid Padding="10">
+        <!-- Immagine a schermo intero -->
+        <Image x:Name="PhotoImage"
+               Aspect="AspectFit"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"/>
+        
+        <!-- Box con informazioni -->
+        <StackLayout BackgroundColor="Black"
+                     Padding="10"
+                     VerticalOptions="End"
+                     Opacity="0.7">
+            <Label x:Name="PhotoTitle"
+                   TextColor="White"
+                   FontSize="18"
+                   FontAttributes="Bold"/>
+            <Label x:Name="PhotoAuthor"
+                   TextColor="White"
+                   FontSize="14"/>
+        </StackLayout>
+    </Grid>
+</ContentPage>
