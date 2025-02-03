@@ -3,12 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FlickrSearchApp.MainPage">
 
-    <VerticalStackLayout Padding="10">
+    <VerticalStackLayout Padding="10" Spacing="10">
         <!-- Search bar for entering query -->
         <SearchBar Placeholder="Search Photos..."
                    x:Name="SearchBar"
                    SearchCommand="{Binding SearchCommand}"
                    Text="{Binding SearchQuery, Mode=TwoWay}"/>
+
         <!-- Activity indicator to show loading state -->
         <ActivityIndicator IsRunning="{Binding IsLoading}"
                            IsVisible="{Binding IsLoading}"/>
@@ -16,20 +17,23 @@
         <!-- CollectionView to display search results -->
         <CollectionView ItemsSource="{Binding Photos}"
                         RemainingItemsThreshold="5"
-                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-        <Image Source="{Binding UrlSmall}"
-               Aspect="AspectFill"/>
-        <Label Text="{Binding Title}"  
-               BackgroundColor="#80000000"
-               TextColor="White"
-               VerticalOptions="End"/>
-    </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}"
+                        VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand"
+                        HeightRequest="650"> <!-- Ensure CollectionView can expand vertically -->
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="5" Margin="5,10">
+                        <!-- Image with dynamic aspect ratio and flexible height -->
+                        <Image Source="{Binding UrlSmall}"
+                               Aspect="AspectFill"
+                               VerticalOptions="FillAndExpand"
+                               HorizontalOptions="FillAndExpand"
+                               HeightRequest="200" /> <!-- Adjust height as needed -->
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </VerticalStackLayout>
 
 </ContentPage>
