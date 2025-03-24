@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FlickrSearchApp.MainPage">
+             x:Class="FlickrSearchApp.MainPage"
+             x:Name="mainPage">
 
     <VerticalStackLayout Padding="10" Spacing="10">
         <!-- Search bar for entering query -->
@@ -20,16 +21,22 @@
                         RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}"
                         VerticalOptions="FillAndExpand"
                         HorizontalOptions="FillAndExpand"
-                        HeightRequest="650"> <!-- Ensure CollectionView can expand vertically -->
+                        HeightRequest="650"> 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="5" Margin="5,10">
-                        <!-- Image with dynamic aspect ratio and flexible height -->
-                        <Image Source="{Binding UrlSmall}"
+                        <Image Source="{Binding UrlLarge}"
                                Aspect="AspectFill"
                                VerticalOptions="FillAndExpand"
                                HorizontalOptions="FillAndExpand"
-                               HeightRequest="200" /> <!-- Adjust height as needed -->
+                               HeightRequest="200">
+                             <!-- TapGestureRecognizer to trigger the command -->
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer
+                                        Command="{Binding BindingContext.PhotoClickCommand, Source={x:Reference mainPage}}"
+                                        CommandParameter="{Binding .}" />
+                            </Image.GestureRecognizers>
+                        </Image>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

@@ -12,7 +12,5 @@ namespace FlickrSearchApp.Services
         public string GetApiKey() =>
             Preferences.Get(API_KEY_NAME, DEFAULT_API_KEY);
     }
-
-	
 }
 

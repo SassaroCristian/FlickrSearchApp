@@ -1,30 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FlickrSearchApp.Views.PhotoDetailPage"
+             x:Class="FlickrSearchApp.PhotoDetailPage"
              Title="Photo Details">
+
     <Grid Padding="10">
-        <!-- Immagine a schermo intero -->
+        <Button x:Name="backButton"
+        Text="Back"
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        Command="{Binding BackCommand}" />
+        <!-- Image displayed in full screen -->
         <Image x:Name="PhotoImage"
                Aspect="AspectFit"
+               HeightRequest="300"
                HorizontalOptions="Center"
                VerticalOptions="Center"
-               Source="{Binding PhotoUrl}"/>
-        
-        <!-- Box con informazioni -->
+               Source="{Binding Url}" />
+
+        <!-- Box with photo details -->
         <StackLayout BackgroundColor="Black"
                      Padding="10"
                      VerticalOptions="End"
                      Opacity="0.7">
-            <Label x:Name="PhotoTitle"
+            <Label Text="{Binding Title}" 
                    TextColor="White"
                    FontSize="18"
-                   FontAttributes="Bold"
-                   Text="{Binding Title}"/>
-            <Label x:Name="PhotoAuthor"
+                   FontAttributes="Bold"/>
+            <Label Text="{Binding Author}"
                    TextColor="White"
-                   FontSize="14"
-                   Text="{Binding Author}"/>
+                   FontSize="14"/>
         </StackLayout>
     </Grid>
 </ContentPage>
